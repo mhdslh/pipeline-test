@@ -8,6 +8,14 @@ on:
         required: false
         default: 2
         type: string
+      caller:
+        description: "caller"
+        required: false
+        type: string
+      day:
+        description: "day"
+        required: false
+        type: string        
 
 
 permissions:
@@ -38,6 +46,6 @@ jobs:
       run: | 
         echo "${{ inputs.attempt }}"
         echo "${{ inputs.attempt || 20 }}"
-        export dispatch_input='{"key1": "value1", "key2": 42}'
-        python -u retry.py --token "${{ secrets.GITHUB_TOKEN }}" --attempt "${{ inputs.attempt }}" --workflow "retry.yaml" --dispatch-input "${dispatch_input}"
+        export data='{"caller": "${{ inputs.caller || mohammad }}", "day": "${{ inputs.day || Thursday }}"}'
+        python -u retry.py --token "${{ secrets.GITHUB_TOKEN }}" --attempt "${{ inputs.attempt }}" --workflow "retry.yaml" --data "${data}"
 
