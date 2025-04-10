@@ -6,7 +6,7 @@ on:
       attempt:
         description: "max retry count"
         required: false
-        # default: 2
+        default: 2
         type: string
 
 
