@@ -10,7 +10,7 @@ on:
         type: inputs
 
 
-Permission:
+permissions:
   actions: write
 
 jobs:
