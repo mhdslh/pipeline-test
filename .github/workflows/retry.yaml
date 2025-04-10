@@ -1,0 +1,38 @@
+name: Retry
+
+on:
+  workflow_dispatch:
+    inputs:
+      attempt:
+        description: "max retry count"
+        required: false
+        default: 2
+        type: inputs
+
+
+jobs:
+  retry:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: checkout
+      id: checkout
+      uses: actions/checkout@v4
+
+    - name: install python
+      id: install-python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12.7' 
+
+    - name: install dependencies
+      id: install-dependencies
+      run: |
+        pip install requests
+
+    - name: dispatch
+      id: dispatch
+      run: | 
+        ls
+        python retry.py --token "${{ secrets.GITHUB_TOKEN }}" --retry "${{ inputs.attempt }}" --workflow "retry.yaml"
+
