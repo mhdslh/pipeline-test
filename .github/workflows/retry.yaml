@@ -10,6 +10,9 @@ on:
         type: inputs
 
 
+Permission:
+  actions: write
+
 jobs:
   retry:
     runs-on: ubuntu-latest
