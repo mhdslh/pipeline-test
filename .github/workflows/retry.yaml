@@ -38,5 +38,6 @@ jobs:
       run: | 
         echo "${{ inputs.attempt }}"
         echo "${{ inputs.attempt || 20 }}"
-        python -u retry.py --token "${{ secrets.GITHUB_TOKEN }}" --attempt "${{ inputs.attempt }}" --workflow "retry.yaml" --name "mohammad"
+        export dispatch_input='{"key1": "value1", "key2": 42}'
+        python -u retry.py --token "${{ secrets.GITHUB_TOKEN }}" --attempt "${{ inputs.attempt }}" --workflow "retry.yaml" --dispatch-input ${dispatch_input}
 

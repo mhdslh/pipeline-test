@@ -1,7 +1,7 @@
 import argparse
 import requests
 import time
-
+import json
 
 
 OWNER = "mhdslh"
@@ -13,12 +13,17 @@ def main():
     parser.add_argument("--token")
     parser.add_argument("--attempt", default="1")
     parser.add_argument("--workflow")
+    parser.add_argument("--dispatch-input")
 
     # is there any way to add any key value pair dynamically without knowing them in advance?
 
-    args, dynamic_input = parser.parse_known_args()
+    args = parser.parse_args()
 
     print(f"triggered with ${args.attempt}")
+    temp = json.loads(args.dispatch_input)
+    for k, v in temp.items():
+        print(f"====> {k}={v}")
+
     retry = int(args.attempt)
     
     if retry <= 0:
