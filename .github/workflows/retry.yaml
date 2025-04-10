@@ -36,6 +36,7 @@ jobs:
     - name: dispatch
       id: dispatch
       run: | 
-        ls
+        echo "${{ inputs.attempt }}"
+        echo "${{ inputs.attempt | 20 }}"
         python -u retry.py --token "${{ secrets.GITHUB_TOKEN }}" --retry "${{ inputs.attempt }}" --workflow "retry.yaml"
 
