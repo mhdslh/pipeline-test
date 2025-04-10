@@ -8,17 +8,18 @@ OWNER = "mhdslh"
 REPO = "pipeline-test"
 REF = "main" 
 
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--token")
-    parser.add_argument("--retry", default="1")
+    parser.add_argument("--attempt", default="1")
     parser.add_argument("--workflow")
 
-    args = parser.parse_args()
+    # is there any way to add any key value pair dynamically without knowing them in advance?
 
-    print(f"triggered with ${args.retry}")
-    retry = int(args.retry)
+    args, dynamic_input = parser.parse_known_args()
+
+    print(f"triggered with ${args.attempt}")
+    retry = int(args.attempt)
     
     if retry <= 0:
         return
@@ -26,6 +27,12 @@ def main():
     inputs = {
         "attempt": str(retry-1),
     }
+
+    for arg in dynamic_input:
+        if "=" in arg:
+            key, value = arg.split("=", 1)
+            print(f"HERE for {key}={value}")
+            inputs[key.lstrip("-")] = value
 
     payload = {
         "ref": REF,
