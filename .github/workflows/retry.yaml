@@ -46,6 +46,6 @@ jobs:
       run: | 
         echo "${{ inputs.attempt }}"
         echo "${{ inputs.attempt || 20 }}"
-        export data='{"caller": "${{ inputs.caller || mohammad }}", "day": "${{ inputs.day || Thursday }}"}'
+        export data='{"caller": "${{ inputs.caller || 'Mohammad' }}", "day": "${{ inputs.day || 'Thursday' }}"}'
         python -u retry.py --token "${{ secrets.GITHUB_TOKEN }}" --attempt "${{ inputs.attempt }}" --workflow "retry.yaml" --data "${data}"
 
