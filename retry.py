@@ -12,7 +12,7 @@ REF = "main"
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--token")
-    parser.add_argument("--retry", default=1)
+    parser.add_argument("--retry", type=int, default=1)
     parser.add_argument("--workflow")
 
     args = parser.parse_args()
