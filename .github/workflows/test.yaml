@@ -13,7 +13,7 @@ on:
         type: string
       key2:
         description: "key2"
-        type: number
+        type: string
 
 permissions:
   actions: write
@@ -38,6 +38,6 @@ jobs:
       caller-data: >-
         {
           \"key1\": \"${{ inputs.key1 }}\",
-          \"key2\": ${{ inputs.key2 }}
+          \"key2\": \"${{ inputs.key2 }}\"
         }
       retry: "${{ inputs.retry }}"
