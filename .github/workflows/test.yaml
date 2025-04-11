@@ -19,7 +19,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - run:
+    - run: |
         echo "Hello Wolrd!"
         echo "key1: ${{ inputs.key1 }}"
         echo "key2: ${{ inputs.key2 }}"
