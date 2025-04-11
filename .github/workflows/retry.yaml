@@ -46,6 +46,6 @@ jobs:
       run: python -u .github/retry.py  --token "${{ secrets.GITHUB_TOKEN }}" --retry "${{ inputs.retry }}" --workflow "${{ inputs.caller-name }}" --data "${{ inputs.caller-data }}"
 
   # to make workflow status consisent with the test case
-  failure:
+  # failure:
 
-  success:
+  # success:
