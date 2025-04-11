@@ -5,7 +5,7 @@ on:
     inputs:
       retry:
         description: 'number of retry attempts allowed for the calling workflow'
-        required: true
+        required: false
         default: "1"
         type: string
       key1:
