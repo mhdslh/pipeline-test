@@ -20,7 +20,6 @@ permissions:
 
 jobs:
   test:
-    continue-on-error: true
     runs-on: ubuntu-latest
     steps:
     - run: |
@@ -31,6 +30,7 @@ jobs:
 
   retry:
     needs: "test"
+    if: ${{ always() }}
     uses: "./.github/workflows/retry.yaml"
     with:
       caller-name: "test.yaml"
