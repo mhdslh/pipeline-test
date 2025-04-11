@@ -28,9 +28,9 @@ jobs:
   retry:
     needs: "test"
     runs-on: ubuntu-latest
+    if: ${{ always() }}
     steps:
     - uses: "./.github/workflows/retry.yaml"
-      if: ${{ always() }}
       with:
         caller-name: "test.yaml"
         caller-result: "${{ needs.test.result }}"
