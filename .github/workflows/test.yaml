@@ -29,10 +29,9 @@ jobs:
     needs: "test"
     runs-on: ubuntu-latest
     if: ${{ always() }}
-    steps:
-    - uses: "./.github/workflows/retry.yaml"
-      with:
-        caller-name: "test.yaml"
-        caller-result: "${{ needs.test.result }}"
-        caller-data: '{"key1": "${{ inputs.key1 }}", "key2": "${{ inputs.key2 }}"}'
-        retry: "${{ inputs.retry }}"
+    uses: "./.github/workflows/retry.yaml"
+    with:
+      caller-name: "test.yaml"
+      caller-result: "${{ needs.test.result }}"
+      caller-data: '{"key1": "${{ inputs.key1 }}", "key2": "${{ inputs.key2 }}"}'
+      retry: "${{ inputs.retry }}"
