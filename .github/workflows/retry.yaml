@@ -31,7 +31,7 @@ permissions:
 jobs:
   retry:
     runs-on: ubuntu-latest
-    if: ${{ always() && inputs.caller-result == failure }}
+    # if: ${{ always() && inputs.caller-result == failure }}
     steps:
     - name: checkout
       uses: actions/checkout@v4
