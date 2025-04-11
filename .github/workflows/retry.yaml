@@ -32,7 +32,6 @@ permissions:
 jobs:
   retry:
     runs-on: ubuntu-latest
-    # if: ${{ always() }}
     steps:
     - name: checkout
       uses: actions/checkout@v4
@@ -45,7 +44,20 @@ jobs:
     - name: retry
       run: python -u .github/retry.py  --token "${{ secrets.GITHUB_TOKEN }}" --retry "${{ inputs.retry }}" --workflow "${{ inputs.caller-name }}" --data "${{ inputs.caller-data }}"
 
-  # to make workflow status consisent with the test case
-  # failure:
+  on-failure:
+    needs: retry
+    if: ${{ inputs["caller-result"] == "failure" }}  
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+      echo $'\u274C'
+      exit 1
 
-  # success:
+  on-success:
+    needs: retry
+    if: ${{ inputs["caller-result"] == "success" }}  
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+      echo $'\u2705'
+      exit 0
