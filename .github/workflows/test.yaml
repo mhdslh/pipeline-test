@@ -1,0 +1,38 @@
+name: Retry
+
+on:
+  workflow_dispatch:
+    inputs:
+      retry:
+        description: 'number of retry attempts allowed for the calling workflow'
+        required: true
+        default: "1"
+        type: string
+      key1:
+        description: "key1"
+        type: string
+      key2:
+        description: "key2"
+        type: string
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - run:
+        echo "Hello Wolrd!"
+        echo "key1: ${{ inputs.key1 }}"
+        echo "key2: ${{ inputs.key2 }}"
+        exit(1)
+
+  retry:
+    needs: "test"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: ".github/workflows/retry.yaml"
+      if: ${{ always() }}
+      with:
+        caller-name: "test.yaml"
+        caller-result: "${{ needs.test.result }}"
+        caller-data: '{"key1": "${{ inputs.key1 }}", "key2": "${{ inputs.key2 }}"}'
+        retry: "${{ inputs.retry }}"

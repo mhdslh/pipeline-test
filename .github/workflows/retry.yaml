@@ -1,51 +1,45 @@
 name: Retry
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
-      attempt:
-        description: "max retry count"
-        required: false
-        default: 2
+      caller-name:
+        description: 'file name of the workflow that is requesting a retry'
+        required: true
         type: string
-      caller:
-        description: "caller"
-        required: false
-        type: string
-      day:
-        description: "day"
-        required: false
-        type: string        
 
+      caller-result:
+        description: 'final result ("success" or "failure") of the calling workflow'
+        required: true
+        type: string
+
+      caller-data:
+        description: 'JSON-encoded string of inputs needed to retry the caller'
+        required: true
+        type: string
+
+      retry:
+        description: 'number of retry attempts allowed for the calling workflow'
+        required: true
+        default: "0"
+        type: string
 
 permissions:
   actions: write
 
+
 jobs:
   retry:
     runs-on: ubuntu-latest
+    if: ${{ inputs.caller-result == "failure" }}
     steps:
-
     - name: checkout
-      id: checkout
       uses: actions/checkout@v4
-
     - name: install python
-      id: install-python
       uses: actions/setup-python@v5
       with:
         python-version: '3.12.7' 
-
     - name: install dependencies
-      id: install-dependencies
-      run: |
-        pip install requests
-
-    - name: dispatch
-      id: dispatch
-      run: | 
-        echo "${{ inputs.attempt }}"
-        echo "${{ inputs.attempt || 20 }}"
-        export data='{"caller": "${{ inputs.caller || 'Mohammad' }}", "day": "${{ inputs.day || 'Thursday' }}"}'
-        python -u retry.py --token "${{ secrets.GITHUB_TOKEN }}" --attempt "${{ inputs.attempt }}" --workflow "retry.yaml" --data "${data}"
-
+      run: pip install requests
+    - name: retry
+      run: python -u .github/retry.py  --token "${{ secrets.GITHUB_TOKEN }}" --retry "${{ inputs.retry }}" --workflow "${{ inputs.caller-name }}" --data "${{ inputs.caller-data }}"
