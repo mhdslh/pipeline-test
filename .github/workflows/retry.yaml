@@ -46,7 +46,7 @@ jobs:
 
   on-failure:
     needs: retry
-    if: ${{ inputs["caller-result"] == "failure" }}  
+    if: ${{ inputs['caller-result'] == 'failure' }}  
     runs-on: ubuntu-latest
     steps:
     - run: |
@@ -55,7 +55,7 @@ jobs:
 
   on-success:
     needs: retry
-    if: ${{ inputs["caller-result"] == "success" }}  
+    if: ${{ inputs['caller-result'] == 'success' }}  
     runs-on: ubuntu-latest
     steps:
     - run: |
