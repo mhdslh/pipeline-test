@@ -16,6 +16,7 @@ on:
       caller-data:
         description: 'JSON-encoded string of inputs needed to retry the caller'
         required: true
+        default: ''
         type: string
 
       retry:
