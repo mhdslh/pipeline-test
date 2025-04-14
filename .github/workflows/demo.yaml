@@ -21,9 +21,9 @@ jobs:
       shell: bash
       run: |
         #!/bin/bash
-        echo "========> ${{ inputs.num-retry }}"
+        echo "========> ${{ inputs.num-retries }}"
         num_retries=${{ inputs.num-retries }}
-        max_try=$((num_retries+1))
+        max_try=(($num_retries+1))
         set +e
         echo "======================================="
         n=0
