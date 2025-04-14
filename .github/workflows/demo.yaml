@@ -6,7 +6,6 @@ on:
 
       num_retry:
         description: "number of retries"
-        type: string
         default: 1
         required: true
 
@@ -24,7 +23,8 @@ jobs:
         num_retry=${{ inputs.num_retry }}
         max_try=$((num_retry + 1))        
 
-        source venv/bin/activate    
+        echo "===============> $max_try"
+
         set +e
 
         n=0
