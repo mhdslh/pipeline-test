@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
     inputs:
 
-      num-retries:
+      num_retry:
         description: "number of retries"
         type: string
-        default: "1"
+        default: 1
         required: true
 
 jobs:
@@ -20,22 +20,24 @@ jobs:
     - name: "check script"
       shell: bash
       run: |
-        #!/bin/bash
-        echo "========> ${{ inputs.num-retries }}"
-        num_retries=${{ inputs.num-retries }}
-        max_try=(($num_retries+1))
+        #! /bin/bash
+        num_retry=${{ inputs.num_retry }}
+        max_try=$((num_retry + 1))        
+
+        source venv/bin/activate    
         set +e
-        echo "======================================="
+
         n=0
-        while (( $n < $max_try )); do
+        while (( n < max_try )); do
+            echo "============================================================================="
+            echo "Running testcase"
+            echo "============================================================================="
             echo "loop $n"
             ./script.sh $n && break
             ((n++))
-            sleep 1
         done
-        echo "here"
-        if (( n == $max_try )); then
-            echo "Command failed after $max_try attempts."
+
+        if (( n == max_try )); then
+            echo "Command failed after $max_try attempts"
             exit 1
         fi
-        echo "======================================="
