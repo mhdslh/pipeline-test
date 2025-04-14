@@ -15,11 +15,12 @@ jobs:
     steps:
     - name: "checkout"
       uses: actions/checkout@v4
+
     - name: "check script"
       run: |
         n=0
         while [ $n -lt ${{ inputs.num-retries }} ]; do
-            ./script $n && break
+            ./script.sh $n && break
             ((n++))
             sleep 1
         done
