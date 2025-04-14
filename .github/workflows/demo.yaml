@@ -1,0 +1,28 @@
+name: demo
+
+on:
+  workflow_dispatch:
+    inputs:
+
+      num-retries:
+        description: "number of retries"
+        type: string
+        required: true
+
+jobs:
+  try:
+    runs-on: ubuntu-latest
+    steps:
+    - name: "check script"
+      run: |
+        n=0
+        while [ $n -lt ${{ inputs.num-retries }} ]; do
+            ./script $n && break
+            ((n++))
+            sleep 1
+        done
+
+        if (( n == ${{ inputs.num-retries }} )); then
+            echo "Command failed after ${{ inputs.num-retries }} attempts."
+            exit 1
+        fi
