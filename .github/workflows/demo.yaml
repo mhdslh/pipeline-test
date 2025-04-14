@@ -19,6 +19,9 @@ jobs:
     - name: "check script"
       shell: bash
       run: |
+        #!/bin/bash
+        set +e
+
         max_retries=${{ inputs.num-retries }}
         echo "======================================="
         n=0
