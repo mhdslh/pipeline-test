@@ -21,10 +21,9 @@ jobs:
       shell: bash
       run: |
         #!/bin/bash
+        num_retries=${{ inputs.num-retries }}
+        max_try=$((num_retries+1))
         set +e
-
-        max_try=${{ inputs.num-retries }}
-        max_try=(($max_try+1))
         echo "======================================="
         n=0
         while (( $n < $max_try )); do
