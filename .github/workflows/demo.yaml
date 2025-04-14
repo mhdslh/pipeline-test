@@ -18,18 +18,18 @@ jobs:
 
     - name: "check script"
       run: |
-        echo "${{ inputs.num-retries }}"
+        max_retries=${{ inputs.num-retries }}
         echo "======================================="
         n=0
-        while [ $n -lt ${{ inputs.num-retries }} ]; do
+        while [ $n -lt $max_retries ]; do
             echo "loop $n"
             ./script.sh $n && break
             ((n++))
             sleep 1
         done
         echo "here"
-        if (( n == ${{ inputs.num-retries }} )); then
-            echo "Command failed after ${{ inputs.num-retries }} attempts."
+        if (( n == $max_retries }} )); then
+            echo "Command failed after $max_retries attempts."
             exit 1
         fi
         echo "======================================="
