@@ -17,6 +17,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: "check script"
+      shell: bash
       run: |
         max_retries=${{ inputs.num-retries }}
         echo "======================================="
