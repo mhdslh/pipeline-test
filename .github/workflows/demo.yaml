@@ -23,7 +23,8 @@ jobs:
         #!/bin/bash
         set +e
 
-        max_try=((${{ inputs.num-retries }} + 1)
+        max_try=${{ inputs.num-retries }}
+        max_try=(($max_try+1))
         echo "======================================="
         n=0
         while (( $n < $max_try )); do
