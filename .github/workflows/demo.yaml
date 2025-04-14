@@ -13,6 +13,8 @@ jobs:
   try:
     runs-on: ubuntu-latest
     steps:
+    - name: "checkout"
+      uses: actions/checkout@v4
     - name: "check script"
       run: |
         n=0
