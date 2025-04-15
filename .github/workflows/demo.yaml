@@ -27,7 +27,5 @@ jobs:
     - name: "result"
       run: |
         echo "${{ steps.check-script.outputs.key }}"
-        echo "Lets check the step summary" >> "$GITHUB_STEP_SUMMARY"
-        echo "Passed" >> "$GITHUB_STEP_SUMMARY"
 
   
