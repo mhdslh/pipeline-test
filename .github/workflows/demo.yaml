@@ -23,8 +23,6 @@ jobs:
         echo "key=value1" >> "$GITHUB_OUTPUT"
         echo "key=value2" >> "$GITHUB_OUTPUT"
         echo "key=value3" >> "$GITHUB_OUTPUT"
-        echo "YEEEESSSSSS" >> "$GITHUB_STEP_SUMMARY"
-
 
     - name: "result"
       run: |
