@@ -21,14 +21,16 @@ jobs:
 
     - name: "main execution"
       id: "main-execution"
-      continue-on-error: true
+      # continue-on-error: true
       run: |
+        echo "status=ooops" >> "$GITHUB_OUTPUT"
         exit 1
 
     - name: "retries"
       id: "retries"
       if: ${{ failure() }}
       run: |
+        echo "========> ${{ steps.main-execution.status }}"
         echo "HI :)"
 
 
