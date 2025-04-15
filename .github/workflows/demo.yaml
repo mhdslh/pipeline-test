@@ -55,7 +55,7 @@ jobs:
         done
 
         if (( n == num_retry )); then
-            echo "Command failed after $num_retry attempts"
+            echo "Command failed after ((num_retry + 1)) attempts"
             exit 1
         fi
 
