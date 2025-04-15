@@ -19,7 +19,7 @@ jobs:
     - name: "test"
       id: "test"
       shell: bash
-      continue-on-error: true
+      # continue-on-error: true
       run: |
         set +e
         if ./script.sh 0; then
@@ -33,6 +33,7 @@ jobs:
     - name: "retry test"
       id: "retry-test"
       shell: bash
+      if: ${{ failure() }}
       run: |
         status=${{ steps.test.outputs.status }}
         if [[ "$status" == "success" ]]; then
