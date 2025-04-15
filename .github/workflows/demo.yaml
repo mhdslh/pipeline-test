@@ -17,15 +17,27 @@ jobs:
       uses: actions/checkout@v4
 
     - name: "check script"
-      id: "check-script"
       shell: bash
       run: |
-        echo "key=value1" >> "$GITHUB_OUTPUT"
-        echo "key=value2" >> "$GITHUB_OUTPUT"
-        echo "key=value3" >> "$GITHUB_OUTPUT"
+        #! /bin/bash
+        num_retry=${{ inputs.num_retry }}
+        max_try=$((num_retry + 1))        
 
-    - name: "result"
-      run: |
-        echo "${{ steps.check-script.outputs.key }}"
+        echo "===============> $max_try"
 
-  
+        set +e
+
+        n=0
+        while (( n < max_try )); do
+            echo "============================================================================="
+            echo "Running testcase"
+            echo "============================================================================="
+            echo "loop $n"
+            ./script.sh $n && break
+            ((n++))
+        done
+
+        if (( n == max_try )); then
+            echo "Command failed after $max_try attempts"
+            exit 1
+        fi
