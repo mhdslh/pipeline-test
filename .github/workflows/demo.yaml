@@ -26,20 +26,12 @@ jobs:
         echo "status=failure" >> "$GITHUB_OUTPUT"
         exit 1
 
-    - name: "retries-1"
-      id: "retries-1"
+    - name: "retries"
+      id: "retries"
       if: ${{ steps.main-execution.outputs.status == 'failure' }}
       run: |
         echo "=======> ${{ steps.main-execution.outputs.status }}"
         echo "HI :)"
-
-    - name: "retries-2"
-      id: "retries-2"
-      if: ${{ steps.main-execution.outputs.status != 'failure' }}
-      run: |
-        echo "=======> ${{ steps.main-execution.outputs.status }}"
-        echo "Bye :)"
-
 
 
     # - name: "check script"
