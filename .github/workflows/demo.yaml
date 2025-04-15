@@ -21,6 +21,7 @@ jobs:
 
     - name: "main execution"
       id: "main-execution"
+      continue-on-error: true
       run: |
         exit 1
 
