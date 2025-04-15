@@ -30,6 +30,7 @@ jobs:
       id: "retries"
       if: ${{ steps.main-execution.outputs.status == 'failure' }}
       run: |
+        echo "=======> ${{ steps.main-execution.outputs.status }}"
         echo "HI :)"
 
 
