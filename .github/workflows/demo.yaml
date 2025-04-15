@@ -28,9 +28,9 @@ jobs:
 
     - name: "retries"
       id: "retries"
-      # if: ${{ failure() }}
+      if: ${{ failure() }}
       run: |
-        echo "========> ${{ steps.main-execution.status }}"
+        echo "========> ${{ steps.main-execution.outputs.status }}"
         echo "HI :)"
 
 
