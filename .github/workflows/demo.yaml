@@ -54,8 +54,8 @@ jobs:
             ((n++))
         done
 
-        if (( n == max_try )); then
-            echo "Command failed after $max_try attempts"
+        if (( n == num_retry )); then
+            echo "Command failed after $num_retry attempts"
             exit 1
         fi
 
