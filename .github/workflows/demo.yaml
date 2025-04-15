@@ -9,9 +9,6 @@ on:
         default: 1
         required: true
 
-env:
-  ACTION_STATUS: failure
-
 jobs:
   try:
     runs-on: ubuntu-latest
@@ -19,45 +16,57 @@ jobs:
     - name: "checkout"
       uses: actions/checkout@v4
 
-    - name: "main execution"
-      id: "main-execution"
+    - name: "test"
+      id: "test"
+      shell: bash
       continue-on-error: true
       run: |
-        echo "status=failure" >> "$GITHUB_OUTPUT"
-        exit 1
+        set +e
+        if ./script.sh 0; then
+          echo "SUCCEEDED"
+          echo "status=success" >> "$GITHUB_OUTPUT"
+        else
+          echo "FAILED"
+          echo "status=failure" >> "$GITHUB_OUTPUT"
+        fi
 
-    - name: "retries"
-      id: "retries"
-      if: ${{ steps.main-execution.outputs.status == 'failure' }}
+    - name: "retry test"
+      id: "retry-test"
+      shell: bash
       run: |
-        echo "=======> ${{ steps.main-execution.outputs.status }}"
-        echo "HI :)"
+        status=${{ steps.test.outputs.status }}
+        if [[ "$status" == "success" ]]; then
+          exit 0
+        fi
+        
+        num_retry=${{ inputs.num_retry }}
+        echo "===============> $num_retry"
 
+        set +e
 
-    # - name: "check script"
-    #   shell: bash
-    #   run: |
-    #     #! /bin/bash
-    #     num_retry=${{ inputs.num_retry }}
-    #     max_try=$((num_retry + 1))        
+        n=0
+        while (( n < num_retry )); do
+            echo "============================================================================="
+            echo "Running testcase"
+            echo "============================================================================="
+            echo "loop $n"
+            ./script.sh $n && break
+            ((n++))
+        done
 
-    #     echo "===============> $max_try"
+        if (( n == max_try )); then
+            echo "Command failed after $max_try attempts"
+            exit 1
+        fi
 
-    #     set +e
+    - name: "summary"
+      id: "summary"
+      shell: "bash"
+      run: |
+        status=${{ steps.test.outputs.status }}
+        if [[ "$status" == "success" ]]; then
+          echo "Main execution Passed"
+        else
+          echo "Retry Passed"
+        fi
 
-    #     n=0
-    #     while (( n < max_try )); do
-    #         echo "============================================================================="
-    #         echo "Running testcase"
-    #         echo "============================================================================="
-    #         echo "loop $n"
-    #         ./script.sh $n && break
-    #         ((n++))
-    #     done
-
-        # if (( n == max_try )); then
-        #     echo "Command failed after $max_try attempts"
-        #     exit 1
-        # fi
-
-# if main fails (X) => retry (conclusion must be based on the overall but main must be marked as failure)
