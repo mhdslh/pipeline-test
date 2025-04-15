@@ -22,7 +22,7 @@ jobs:
       continue-on-error: true
       run: |
         set +e
-        if ./script.sh 5; then
+        if ./script.sh 0; then
           echo "SUCCEEDED"
           echo "status=success" >> "$GITHUB_OUTPUT"
         else
