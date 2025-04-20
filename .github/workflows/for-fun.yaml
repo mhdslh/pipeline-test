@@ -1,0 +1,44 @@
+name: For Fun
+
+on:
+  workflow_dispatch:
+    inputs:
+      caller:
+        description: "caller name"
+        required: true
+        default: "user"
+        type: string
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      workflow-caller: ${{ steps.set-user.outputs.caller }}
+    steps:
+    - name: set user
+      id: set-user
+      run: |
+        caller="${{ inputs.caller }}"
+        if [[ "$caller" == "user" ]]; then
+          caller="github"
+          echo "caller=$caller" >> $GITHUB_OUPUT
+          echo "error for default user"
+          exit 1
+        fi
+        echo "caller=$caller" >> $GITHUB_OUPUT
+        echo "Hi, $caller"
+
+  retry:
+    runs-on: ubuntu-latest
+    needs: prepare
+    if: ${{  failure() }}
+    steps:
+    - name: check
+      id: check
+      run: |
+        echo "Hi ${{ needs.prepare.outputs.workflow-caller gt}}"
+        echo "Check this job is executed only at failure"
+        echo "Check previous job is marked as failed"
+        echo "Check workflow is marked as passed"
+        
+    
