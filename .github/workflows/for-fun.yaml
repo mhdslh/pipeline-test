@@ -36,7 +36,7 @@ jobs:
     - name: check
       id: check
       run: |
-        echo "=====> ${{  needs.check-failure.result }}"
+        echo "=====> ${{  needs.prepare.result }}"
         echo "Hi ${{ needs.prepare.outputs.workflow-caller }}"
         echo "Check this job is executed only at failure"
         echo "Check previous job is marked as failed"
