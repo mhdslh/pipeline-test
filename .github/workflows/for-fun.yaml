@@ -37,18 +37,18 @@ jobs:
         echo "===> HERE: $outcome"
         if [[ "$outcome" != "success" ]]; then
           echo "status=failed" >> "$GITHUB_OUTPUT"
-        else
-          echo "status=success" >> "$GITHUB_OUTPUT"
+          exit 1
         fi        
 
   retry:
     runs-on: ubuntu-latest
     needs: prepare
+    if: ${{ "needs.prepare.outputs.workflow-status" == "failed" }}
     steps:
     - name: check
       id: check
       run: |
-        echo "=====> ${{  needs.prepare.result }}"
+        # echo "=====> ${{  needs.prepare.result }}"
         echo "Hi ${{ needs.prepare.outputs.workflow-caller }}"
         echo "Check this job is executed only at failure"
         echo "Check previous job is marked as failed"
