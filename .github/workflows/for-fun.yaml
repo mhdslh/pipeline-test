@@ -44,12 +44,11 @@ jobs:
   retry:
     runs-on: ubuntu-latest
     needs: prepare
-    # if: ${{ needs.prepare.outputs.workflow-status == 'failed' }}
+    if: ${{ needs.prepare.outputs.workflow-status == 'failed' }}
     steps:
     - name: check
       id: check
       run: |
-        echo "OOPS ${{ needs.prepare.outputs.workflow-status }}"
         # echo "=====> ${{  needs.prepare.result }}"
         echo "Hi ${{ needs.prepare.outputs.workflow-caller }}"
         echo "Check this job is executed only at failure"
