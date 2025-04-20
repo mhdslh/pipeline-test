@@ -12,6 +12,7 @@ on:
 jobs:
   prepare:
     runs-on: ubuntu-latest
+    continue-on-error: true
     outputs:
       workflow-caller: ${{ steps.set-user.outputs.caller }}
     steps:
