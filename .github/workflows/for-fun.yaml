@@ -15,7 +15,7 @@ jobs:
     continue-on-error: true 
     outputs:
       workflow-caller: ${{ steps.set-user.outputs.caller }}
-      workflow-satus: ${{ steps.get-outcome.outputs.status }}
+      workflow-status: ${{ steps.get-outcome.outputs.status }}
     steps:
     - name: set user
       id: set-user
@@ -39,6 +39,7 @@ jobs:
           echo "status=failed" >> "$GITHUB_OUTPUT"
           exit 1
         fi        
+        echo "status=success" >> "$GITHUB_OUTPUT"
 
   retry:
     runs-on: ubuntu-latest
