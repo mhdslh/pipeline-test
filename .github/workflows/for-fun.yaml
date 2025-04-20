@@ -12,12 +12,14 @@ on:
 jobs:
   prepare:
     runs-on: ubuntu-latest
-    continue-on-error: true
+    continue-on-error: true 
     outputs:
       workflow-caller: ${{ steps.set-user.outputs.caller }}
+      workflow-satus: ${{ steps.get-outcome.outputs.status }}
     steps:
     - name: set user
       id: set-user
+      continue-on-error: true 
       run: |
         caller="${{ inputs.caller }}"
         if [[ "$caller" == "user" ]]; then
@@ -28,6 +30,16 @@ jobs:
         fi
         echo "caller=$caller" >> "$GITHUB_OUTPUT"
         echo "Hi, $caller"
+    - name: get outcome
+      id: get-outcome
+      run: |
+        outcome="${{ steps.set-user.outcome }}"
+        echo "===> HERE: $outcome"
+        if [[ "$outcome" != "success" ]]; then
+          echo "status=failed" >> "$GITHUB_OUTPUT"
+        else
+          echo "status=success" >> "$GITHUB_OUTPUT"
+        fi        
 
   retry:
     runs-on: ubuntu-latest
