@@ -21,11 +21,11 @@ jobs:
         caller="${{ inputs.caller }}"
         if [[ "$caller" == "user" ]]; then
           caller="github"
-          echo "caller=$caller" >> $GITHUB_OUPUT
+          echo "caller=$caller" >> "$GITHUB_OUTPUT"
           echo "error for default user"
           exit 1
         fi
-        echo "caller=$caller" >> $GITHUB_OUPUT
+        echo "caller=$caller" >> "$GITHUB_OUTPUT"
         echo "Hi, $caller"
 
   retry:
