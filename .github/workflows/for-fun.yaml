@@ -54,6 +54,5 @@ jobs:
         echo "Check this job is executed only at failure"
         echo "Check previous job is marked as failed"
         echo "Check workflow is marked as passed"
-        exit 1
         
     
