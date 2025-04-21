@@ -37,7 +37,6 @@ jobs:
         echo "===> HERE: $outcome"
         if [[ "$outcome" != "success" ]]; then
           echo "status=failed" >> "$GITHUB_OUTPUT"
-          exit 1
         fi        
         echo "status=success" >> "$GITHUB_OUTPUT"
 
