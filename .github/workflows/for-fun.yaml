@@ -33,7 +33,7 @@ jobs:
       id: get-outcome
       if: ${{ failure() }}
       run: |
-        outcome="${{ steps.set-user.rsult }}"
+        outcome="${{ steps.set-user.result }}"
         echo "===> HERE: $outcome"
         if [[ "$outcome" != "success" ]]; then
           echo "status=failed" >> "$GITHUB_OUTPUT"
