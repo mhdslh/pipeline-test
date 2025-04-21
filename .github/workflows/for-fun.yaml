@@ -19,7 +19,6 @@ jobs:
     steps:
     - name: set user
       id: set-user
-      continue-on-error: true 
       run: |
         caller="${{ inputs.caller }}"
         if [[ "$caller" == "user" ]]; then
@@ -32,6 +31,7 @@ jobs:
         echo "Hi, $caller"
     - name: get outcome
       id: get-outcome
+      if: ${{ failure() }}
       run: |
         outcome="${{ steps.set-user.outcome }}"
         echo "===> HERE: $outcome"
